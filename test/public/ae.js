@@ -1,10 +1,36 @@
-require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 module.exports = {
     AENTROPICO_SERVER_URL: 'http://localhost:8000',
     GET_DATA_PACKAGE__URI: 'free/dataPackage',
     RUN_DATA_APP_URI: 'free/dataApps'
 };
-},{}],2:[function(require,module,exports){
+},{}],"ae":[function(require,module,exports){
+module.exports=require('jDndVB');
+},{}],"jDndVB":[function(require,module,exports){
+var Superagent = require('superagent');
+var Constants = require('./aeConstants');
+
+function DataAppExecutor() {
+
+}
+
+DataAppExecutor.prototype.buildDataPackage = function(correspondences, dataAppId) {
+    Superagent
+        .get(Constants.AENTROPICO_SERVER_URL + '/' + Constants.GET_DATA_PACKAGE__URI)
+        .query({
+            dataappid: dataAppId
+        })
+        .end(function(res) {
+            console.log(res.status);
+        });
+};
+
+DataAppExecutor.prototype.runDataApp = function(correspondences) {
+	
+};
+
+module.exports = DataAppExecutor;
+},{"./aeConstants":1,"superagent":5}],4:[function(require,module,exports){
 
 /**
  * Reduce `arr` with `fn`.
@@ -29,7 +55,7 @@ module.exports = function(arr, fn, initial){
   
   return curr;
 };
-},{}],3:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 /**
  * Module dependencies.
  */
@@ -1080,7 +1106,7 @@ request.put = function(url, data, fn){
 
 module.exports = request;
 
-},{"emitter":4,"reduce":2}],4:[function(require,module,exports){
+},{"emitter":6,"reduce":4}],6:[function(require,module,exports){
 
 /**
  * Expose `Emitter`.
@@ -1246,28 +1272,4 @@ Emitter.prototype.hasListeners = function(event){
   return !! this.listeners(event).length;
 };
 
-},{}],"ae":[function(require,module,exports){
-var Superagent = require('superagent');
-var Constants = require('./ae_constants');
-
-function DataAppExecutor() {
-
-}
-
-DataAppExecutor.prototype.buildDataPackage = function(correspondences, dataAppId) {
-    Superagent
-        .get(Constants.AENTROPICO_SERVER_URL + '/' + Constants.GET_DATA_PACKAGE__URI)
-        .query({
-            dataappid: dataAppId
-        })
-        .end(function(res) {
-            console.log(res.status);
-        });
-};
-
-DataAppExecutor.prototype.runDataApp = function(correspondences) {
-  
-};
-
-module.exports = DataAppExecutor;
-},{"./ae_constants":1,"superagent":3}]},{},[]);
+},{}]},{},["jDndVB"]);
