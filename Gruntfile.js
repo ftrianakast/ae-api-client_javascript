@@ -2,7 +2,7 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         watch: {
-            files: ['dataAppExecutor.js'],
+            files: ['dataAppExecutor.js', 'aentropico_lib/*/*.js'],
             tasks: ['browserify']
         },
         browserify: {
