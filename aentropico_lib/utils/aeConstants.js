@@ -1,5 +1,5 @@
 module.exports = {
-    AENTROPICO_SERVER_URL: 'http://localhost:8000',
+    AENTROPICO_SERVER_URL: 'http://54.214.31.92:8000',
     GET_DATA_PACKAGE__URI: 'free/dataPackage',
     RUN_DATA_APP_URI: 'free/dataApps',
     GET_CORS_URLS: 'free/inputFiles/CORSWritePresignedUrls',
