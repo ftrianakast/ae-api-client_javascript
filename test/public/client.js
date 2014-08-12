@@ -10,8 +10,8 @@ dataAppExecutor.buildDataPackage({
         var myInterval = setInterval(function() {
             dataAppExecutor.getResult(job, function(res) {
                 if (res.length !== 0) {
-                    console.log(res);
                     window.clearInterval(myInterval);
+                    $('#piroo').attr('src', res[0].url);
                 }
             });
         }, 3000);
