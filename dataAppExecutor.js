@@ -58,15 +58,29 @@ DataAppExecutor.prototype.buildDataPackage = function(correspondences, dataAppId
  * @param  {Object} clientDataPackage
  * @param  {String} dataAppId
  */
-DataAppExecutor.prototype.runDataApp = function(clientDataPackage, dataAppId) {
+DataAppExecutor.prototype.runDataApp = function(clientDataPackage, dataAppId, cb) {
     var realClientDataPackage = Serializer.serializeDataPackage(clientDataPackage);
     Superagent
         .post(Constants.AENTROPICO_SERVER_URL + '/' + Constants.RUN_DATA_APP_URI + '/' + dataAppId)
         .send(realClientDataPackage)
         .end(function(res) {
-            console.log(res.body);
+            cb(res.body.id);
         });
 };
+
+/**
+ * @method  getJob
+ * @return {String} jobId
+ */
+DataAppExecutor.prototype.getResult = function(jobId, cb) {
+    Superagent
+        .get(Constants.AENTROPICO_SERVER_URL + '/' + Constants.GET_JOB + '/' + jobId)
+        .send()
+        .end(function(res) {
+            cb(res.body.results);
+        });
+};
+
 
 /**
  * @method buildUserTables

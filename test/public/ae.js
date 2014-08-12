@@ -329,6 +329,7 @@ module.exports = {
     GET_DATA_PACKAGE__URI: 'free/dataPackage',
     RUN_DATA_APP_URI: 'free/dataApps',
     GET_CORS_URLS: 'free/inputFiles/CORSWritePresignedUrls',
+    GET_JOB: 'free/jobs',
     CSV_EXT: 'csv',
     PUBLIC: 'public',
     PRIVATE: 'private'
@@ -348,6 +349,8 @@ module.exports.generateUniqueId = function() {
 module.exports.simpleClone = function(object){
 	return JSON.parse(JSON.stringify(object));
 };
+},{}],"ae":[function(require,module,exports){
+module.exports=require('jDndVB');
 },{}],"jDndVB":[function(require,module,exports){
 // ------------------------------------------------------------------------------
 // External
@@ -409,15 +412,29 @@ DataAppExecutor.prototype.buildDataPackage = function(correspondences, dataAppId
  * @param  {Object} clientDataPackage
  * @param  {String} dataAppId
  */
-DataAppExecutor.prototype.runDataApp = function(clientDataPackage, dataAppId) {
+DataAppExecutor.prototype.runDataApp = function(clientDataPackage, dataAppId, cb) {
     var realClientDataPackage = Serializer.serializeDataPackage(clientDataPackage);
     Superagent
         .post(Constants.AENTROPICO_SERVER_URL + '/' + Constants.RUN_DATA_APP_URI + '/' + dataAppId)
         .send(realClientDataPackage)
         .end(function(res) {
-            console.log(res.body);
+            cb(res.body.id);
         });
 };
+
+/**
+ * @method  getJob
+ * @return {String} jobId
+ */
+DataAppExecutor.prototype.getResult = function(jobId, cb) {
+    Superagent
+        .get(Constants.AENTROPICO_SERVER_URL + '/' + Constants.GET_JOB + '/' + jobId)
+        .send()
+        .end(function(res) {
+            cb(res.body.results);
+        });
+};
+
 
 /**
  * @method buildUserTables
@@ -534,9 +551,7 @@ function buildClientDataPackage(userTables, dataPackage) {
 // Exports
 // ------------------------------------------------------------------------------
 module.exports = DataAppExecutor;
-},{"./aentropico_lib/models/dataPackage":1,"./aentropico_lib/models/resource":3,"./aentropico_lib/models/source":4,"./aentropico_lib/models/userTable":5,"./aentropico_lib/serializers/deserializer":6,"./aentropico_lib/serializers/serializer":7,"./aentropico_lib/utils/aeConstants":8,"./aentropico_lib/utils/utilities":9,"async":12,"superagent":15}],"ae":[function(require,module,exports){
-module.exports=require('jDndVB');
-},{}],12:[function(require,module,exports){
+},{"./aentropico_lib/models/dataPackage":1,"./aentropico_lib/models/resource":3,"./aentropico_lib/models/source":4,"./aentropico_lib/models/userTable":5,"./aentropico_lib/serializers/deserializer":6,"./aentropico_lib/serializers/serializer":7,"./aentropico_lib/utils/aeConstants":8,"./aentropico_lib/utils/utilities":9,"async":12,"superagent":15}],12:[function(require,module,exports){
 (function (process){
 /*!
  * async
